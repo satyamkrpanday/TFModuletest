@@ -1,17 +1,17 @@
-resource "aws_instance" "my_instance" {
+module "aws_instance" {
 
-  ami = var.ami_id
-  instance_type = var.inst
-  subnet_id = "subnet-0962069167a59d185"
+  source = "./aws"
+  ami_id = var.ami_id
+  inst   = var.inst
+  owner  = var.owner
+  name   = var.name
+  # purpose = var.purpose
 
-
-tags = {
-    name = var.name
-    owner = var.owner
 }
 
- volume_tags = {
-          name = var.name
-          owner = var.owner
- }
+module "aws_s3_bucket" {
+  source    = "./S3"
+  my_bucket = var.my_bucket
+  purpose   = var.purpose
+  owner     = var.name
 }
